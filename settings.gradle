@@ -38,4 +38,4 @@
  *
  */
 
-include ':app', ':backend', ':randomjokes'
+include ':app', ':backend', ':randomjokes', ':jokedisplayer'
