@@ -47,13 +47,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.android.randomjokes.JokeTeller;
+import com.example.android.randomjokes.RandomJokeTeller;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    JokeTeller jokeTeller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        jokeTeller = new RandomJokeTeller();
     }
 
 
@@ -80,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        String joke = jokeTeller.tellJoke();
+        Toast.makeText(this, joke, Toast.LENGTH_SHORT).show();
     }
 
 

@@ -38,54 +38,28 @@
  *
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.cloud.tools.endpoints-framework-client'
+package com.example.android.randomjokes;
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.2'
-    }
-}
+import org.junit.Before;
+import org.junit.Test;
 
-android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-    defaultConfig {
-        applicationId "com.udacity.gradle.builditbigger"
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
+public class RandomJokeTellerTest {
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    JokeTeller jokeTeller;
+
+    @Before
+    public void initializeJokeTeller() {
+        jokeTeller = new RandomJokeTeller();
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    @Test
+    public void shouldTellJoke() {
+        String joke = jokeTeller.tellJoke();
+        assertNotNull(joke);
+        assertTrue(joke.length() > 0);
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    endpointsServer project(path: ':backend', configuration: 'endpoints')
-    implementation project(':randomjokes')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.google.android.gms:play-services-ads:11.8.0'
-    implementation 'com.google.api-client:google-api-client:1.23.0'
-    implementation 'com.google.http-client:google-http-client-android:1.23.0'
-    implementation 'com.google.code.findbugs:jsr305:3.0.1'
-
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    testImplementation 'junit:junit:4.12'
 }
