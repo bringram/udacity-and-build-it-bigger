@@ -40,28 +40,36 @@
 
 package com.udacity.gradle.builditbigger;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.android.jokedisplayer.JokeActivity;
-import com.example.android.randomjokes.JokeTeller;
-import com.example.android.randomjokes.RandomJokeTeller;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    JokeTeller jokeTeller;
+    private SimpleIdlingResource idlingResource;
+
+    /**
+     * Returns the instance of {@link SimpleIdlingResource}. This is only called from test code.
+     */
+    @VisibleForTesting
+    @NonNull
+    public SimpleIdlingResource getIdlingResource() {
+        if (idlingResource == null) {
+            idlingResource = new SimpleIdlingResource();
+        }
+
+        return idlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        jokeTeller = new RandomJokeTeller();
     }
 
 
@@ -88,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchJokeActivity(View view) {
-        Intent intent = new Intent(this, JokeActivity.class);
-        String joke = jokeTeller.tellJoke();
-        intent.putExtra(JokeActivity.JOKE_INTENT_KEY, joke);
-        startActivity(intent);
+        JokesAsyncTask jokesAsyncTask = new JokesAsyncTask(getIdlingResource());
+        jokesAsyncTask.execute(this);
     }
 }
