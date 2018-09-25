@@ -40,11 +40,34 @@
 
 package com.example.android.randomjokes;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class RandomJokeTeller implements JokeTeller {
+
+    private List<String> jokeList = Arrays.asList(
+        "Did you hear about the crook who stole a calendar? He got 12 months!",
+        "Did you hear about the semi-colon that broke the law? He was given 2 consecutive sentences.",
+        "I just got fired from my job at the keyboard factory. They told me I wasn't putting in enough shifts.",
+        "Why did the computer show up to work late? It had a hard drive.",
+        "I'm a big fan of whiteboards. I find them quite remarkable",
+        "Yesterday, a clown held the door open for me. It was such a nice jester!",
+        "What do you call a pig that does karate? Pork chop!",
+        "What do you call a bear with no teeth? A gummybear!",
+        "How do you organize a space party? You planet!",
+        "What kind of shorts do clouds wear? Thunderwear!",
+        "Becoming a vegetarian is a big missed steak!",
+        "What do ou call an alligator in a vest? An investigator!",
+        "The machine at the coin factory just suddenly stopped working, with no explanation. It doesn't make any cents!",
+        "I was going to make myself a belt made out of watches, but I realized it would just be a waist of time.",
+        "What sound does a sleeping T-Rex make? A dino-snore!"
+    );
 
     @Override
     public String tellJoke() {
-        return "This is a funny joke";
+        Random random = new Random();
+        return jokeList.get(random.nextInt(jokeList.size()));
     }
 
 }
