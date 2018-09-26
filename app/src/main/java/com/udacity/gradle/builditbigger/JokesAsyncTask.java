@@ -44,6 +44,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.android.jokedisplayer.JokeActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -55,6 +57,8 @@ import com.udacity.gradle.builditbigger.backend.jokeApi.JokeApi;
 import java.io.IOException;
 
 public class JokesAsyncTask extends AsyncTask<Context, Void, String> {
+
+    private static final String TAG = JokesAsyncTask.class.getSimpleName();
 
     private static JokeApi jokeApiService = null;
     private Context context;
@@ -88,8 +92,10 @@ public class JokesAsyncTask extends AsyncTask<Context, Void, String> {
         try {
             return jokeApiService.joke().execute().getJoke();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.w(TAG, "Encountered exception fetching joke from backend: " + e.getMessage(), e);
         }
+
+        return null;
     }
 
     @Override
